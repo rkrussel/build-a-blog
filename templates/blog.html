@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Latest Entries</h2>
+<br>
+{% for i in latestEntries %}
+<div class="post-title"><a href="/blog/{{i.key().id()}}">{{i.title}}</a></div>
+<div class="post-content">{{i.blog}}</div>
+<br>
+{% endfor %}
+
+
+
+
+{% endblock %}
