@@ -19,13 +19,6 @@ class Index(webapp2.RequestHandler):
 
     def get(self):
         self.redirect("/blog")
-        """test= db.GqlQuery("SELECT * FROM Post ORDER BY created DESC LIMIT 1")
-        latest = self.request.get("latest")
-        article = self.request.get("article")
-        link = self.request.get("link")
-        t = jinja_env.get_template("Index.html")
-        response = t.render(latest = test, article = article)
-        self.response.write(response)"""
 
 
 
@@ -62,10 +55,17 @@ class Blog(webapp2.RequestHandler):
         self.response.write(response)
 
 class ViewPostHandler(webapp2.RequestHandler):
+
     def get(self, id):
         singleEntry = Post.get_by_id(int(id))
+        error = ""
+        if not singleEntry:
+            error = "Page does not exist"
+            
+
+            self.redirect("/singlepost.html")
         t = jinja_env.get_template("singlepost.html")
-        response = t.render(title=singleEntry.title, body=singleEntry.blog, time= singleEntry.created)
+        response = t.render(error = error, title=singleEntry.title, body=singleEntry.blog, time= singleEntry.created)
         self.response.write(response)
 
 
